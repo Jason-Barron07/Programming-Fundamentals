@@ -1,4 +1,4 @@
-# TypeScript Fintech Data Types Project
+# TypeScript Fintech Data Types 
 
 ## Overview
 
