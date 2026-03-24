@@ -1,16 +1,8 @@
 import {test, expect} from '@playwright/test'
 import rawData from '../JSON/testData.json' 
+import type { User } from '../common/types/UserData';
 
-const testData = rawData as unknown as User[];
-
-type User = {
-  Fname: string;
-  PhoneNumber: string;
-  Email: string;
-  notes: string;
-};
-
-
+const testData: User[] = rawData;
 
 testData.forEach(({Fname, PhoneNumber, Email, notes})=>{
 
@@ -21,7 +13,9 @@ testData.forEach(({Fname, PhoneNumber, Email, notes})=>{
     await page.getByTestId('cust-phone').fill(PhoneNumber)
     await page.getByTestId('cust-email').fill(Email)
     await page.getByTestId('cust-notes').fill(notes)
+    await page.getByRole('button', { name: 'Save Customer'}).click()
+    const customerCard = page.locator('.customer-card').filter({hasText: Fname});
+    await expect(customerCard).toBeVisible();
   })
-
 })
 
